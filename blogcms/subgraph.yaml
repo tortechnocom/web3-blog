@@ -1,8 +1,8 @@
 specVersion: 0.0.2
 schema:
-  file: schema.graphql
+  file: ./schema.graphql
 dataSources:
-  - kind: ethereum/contract
+  - kind: ethereum
     name: Blog
     network: mainnet
     source:
@@ -17,10 +17,10 @@ dataSources:
         - Post
       abis:
         - name: Blog
-          file: Blog/abis/Blog.json
+          file: ./abis/Blog.json
       eventHandlers:
         - event: PostCreated(uint256,string,string)
           handler: handlePostCreated
         - event: PostUpdated(uint256,string,string,bool)
           handler: handlePostUpdated
-      file: Blog/Blog.wasm
+      file: ./src/mapping.ts
