@@ -2,8 +2,9 @@
 FROM node:16-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
-RUN apk add git
-RUN apk add openssh
+RUN apk add --no-cache g++ make python3
+RUN apk add --no-cache git
+RUN apk add --no-cache openssh
 WORKDIR /app
 COPY package.json ./
 RUN yarn install --frozen-lockfile
@@ -22,6 +23,9 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
+ENV ENVIRONMENT "bsc_testnet"
+ENV ETHERSCAN_API_KEY "PPSEVHETR6WQR6Y6M7J1718S9XSX27MBHC"
+ENV PRIVATE_KEY "0x0a7410e6a4887c78a51617072c457812ddb2b89ec7cda82f7b843e2450815524"
 
 RUN yarn build
 
@@ -54,5 +58,9 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT 3000
+
+ENV ENVIRONMENT "bsc_testnet"
+ENV ETHERSCAN_API_KEY "PPSEVHETR6WQR6Y6M7J1718S9XSX27MBHC"
+ENV PRIVATE_KEY "0x0a7410e6a4887c78a51617072c457812ddb2b89ec7cda82f7b843e2450815524"
 
 CMD ["node", "server.js"]
